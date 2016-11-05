@@ -26,8 +26,10 @@ export class LocationService {
             let latitude = position.coords.latitude;
             let longitude = position.coords.longitude;
 
-            // location.latitude = latitude;
-            // location.longitude = longitude;
+            let userLocation = new Location();
+
+            userLocation.latitude = latitude;
+            userLocation.longitude = longitude;
 
     }
 

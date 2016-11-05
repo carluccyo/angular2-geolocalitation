@@ -17,21 +17,44 @@ System.register("angular2-geolocalitation/app/core/location.model", [], function
             Location = (function () {
                 function Location() {
                 }
+                Object.defineProperty(Location.prototype, "latitude", {
+                    get: function () {
+                        return this._latitude;
+                    },
+                    set: function (latitude) {
+                        this._latitude = latitude;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(Location.prototype, "longitude", {
+                    get: function () {
+                        return this._longitude;
+                    },
+                    set: function (longitude) {
+                        this._longitude = longitude;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
                 return Location;
             }());
             exports_1("Location", Location);
         }
     }
 });
-System.register("angular2-geolocalitation/app/core/location.service", ["@angular/core"], function(exports_2, context_2) {
+System.register("angular2-geolocalitation/app/core/location.service", ["@angular/core", "angular2-geolocalitation/app/core/location.model"], function(exports_2, context_2) {
     "use strict";
     var __moduleName = context_2 && context_2.id;
-    var core_1;
+    var core_1, location_model_1;
     var LocationService;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (location_model_1_1) {
+                location_model_1 = location_model_1_1;
             }],
         execute: function() {
             LocationService = (function () {
@@ -39,6 +62,9 @@ System.register("angular2-geolocalitation/app/core/location.service", ["@angular
                     this.successCallback = function (position) {
                         var latitude = position.coords.latitude;
                         var longitude = position.coords.longitude;
+                        var userLocation = new location_model_1.Location();
+                        userLocation.latitude = latitude;
+                        userLocation.longitude = longitude;
                     };
                     this.errorCallback = function (error) {
                         var errorMessage = 'Unknown error';
@@ -91,8 +117,8 @@ System.register("angular2-geolocalitation/core", ["angular2-geolocalitation/app/
     }
     return {
         setters:[
-            function (location_model_1_1) {
-                exportStar_1(location_model_1_1);
+            function (location_model_2_1) {
+                exportStar_1(location_model_2_1);
             },
             function (location_service_1_1) {
                 exportStar_1(location_service_1_1);

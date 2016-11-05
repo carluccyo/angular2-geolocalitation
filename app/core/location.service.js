@@ -9,13 +9,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
+var location_model_1 = require('./location.model');
 var LocationService = (function () {
     function LocationService() {
         this.successCallback = function (position) {
             var latitude = position.coords.latitude;
             var longitude = position.coords.longitude;
-            // location.latitude = latitude;
-            // location.longitude = longitude;
+            var userLocation = new location_model_1.Location();
+            userLocation.latitude = latitude;
+            userLocation.longitude = longitude;
         };
         this.errorCallback = function (error) {
             var errorMessage = 'Unknown error';
