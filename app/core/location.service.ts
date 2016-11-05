@@ -1,13 +1,13 @@
 import { Injectable, Optional } from "@angular/core";
 import { Location } from './location.model';
-
+import { Logger } from 'angular2-logger/core';
 
 @Injectable()
 export class LocationService {
 
 
     public location: Location;
-    constructor() { }
+    constructor(private logger: Logger) { }
 
 
     getLocation() {
@@ -30,6 +30,8 @@ export class LocationService {
 
         userLocation.latitude = latitude;
         userLocation.longitude = longitude;
+
+        this.logger.info('geolocalitation: ', location);
 
     }
 

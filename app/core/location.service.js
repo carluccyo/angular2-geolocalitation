@@ -10,14 +10,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var location_model_1 = require('./location.model');
+var core_2 = require('angular2-logger/core');
 var LocationService = (function () {
-    function LocationService() {
+    function LocationService(logger) {
+        var _this = this;
+        this.logger = logger;
         this.successCallback = function (position) {
             var latitude = position.coords.latitude;
             var longitude = position.coords.longitude;
             var userLocation = new location_model_1.Location();
             userLocation.latitude = latitude;
             userLocation.longitude = longitude;
+            _this.logger.info('geolocalitation: ', location);
         };
         this.errorCallback = function (error) {
             var errorMessage = 'Unknown error';
@@ -50,7 +54,7 @@ var LocationService = (function () {
     };
     LocationService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [core_2.Logger])
     ], LocationService);
     return LocationService;
 }());

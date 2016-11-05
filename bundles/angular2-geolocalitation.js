@@ -43,10 +43,10 @@ System.register("angular2-geolocalitation/app/core/location.model", [], function
         }
     }
 });
-System.register("angular2-geolocalitation/app/core/location.service", ["@angular/core", "angular2-geolocalitation/app/core/location.model"], function(exports_2, context_2) {
+System.register("angular2-geolocalitation/app/core/location.service", ["@angular/core", "angular2-geolocalitation/app/core/location.model", "angular2-geolocalitation/node_modules/angular2-logger/core"], function(exports_2, context_2) {
     "use strict";
     var __moduleName = context_2 && context_2.id;
-    var core_1, location_model_1;
+    var core_1, location_model_1, core_2;
     var LocationService;
     return {
         setters:[
@@ -55,16 +55,22 @@ System.register("angular2-geolocalitation/app/core/location.service", ["@angular
             },
             function (location_model_1_1) {
                 location_model_1 = location_model_1_1;
+            },
+            function (core_2_1) {
+                core_2 = core_2_1;
             }],
         execute: function() {
             LocationService = (function () {
-                function LocationService() {
+                function LocationService(logger) {
+                    var _this = this;
+                    this.logger = logger;
                     this.successCallback = function (position) {
                         var latitude = position.coords.latitude;
                         var longitude = position.coords.longitude;
                         var userLocation = new location_model_1.Location();
                         userLocation.latitude = latitude;
                         userLocation.longitude = longitude;
+                        _this.logger.info('geolocalitation: ', location);
                     };
                     this.errorCallback = function (error) {
                         var errorMessage = 'Unknown error';
@@ -97,7 +103,7 @@ System.register("angular2-geolocalitation/app/core/location.service", ["@angular
                 };
                 LocationService = __decorate([
                     core_1.Injectable(), 
-                    __metadata('design:paramtypes', [])
+                    __metadata('design:paramtypes', [core_2.Logger])
                 ], LocationService);
                 return LocationService;
             }());
