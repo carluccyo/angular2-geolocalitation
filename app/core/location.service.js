@@ -10,30 +10,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var location_model_1 = require('./location.model');
-var core_2 = require('angular2-logger/core');
 var LocationService = (function () {
-    function LocationService(logger) {
-        var _this = this;
-        this.logger = logger;
+    function LocationService() {
         this.successCallback = function (position) {
             var latitude = position.coords.latitude;
             var longitude = position.coords.longitude;
             var userLocation = new location_model_1.Location();
             userLocation.latitude = latitude;
             userLocation.longitude = longitude;
-            _this.logger.info('geolocalitation: ', location);
+            console.log(userLocation.latitude);
+            console.log(userLocation.longitude);
+            localStorage.setItem('city', JSON.stringify(userLocation));
         };
         this.errorCallback = function (error) {
             var errorMessage = 'Unknown error';
             switch (error.code) {
                 case 1:
-                    errorMessage = 'Permission denied';
+                    errorMessage = 'Permission denied: ' + JSON.stringify(error.code);
                     break;
                 case 2:
-                    errorMessage = 'Position unavailable';
+                    errorMessage = 'Position unavailable: ' + JSON.stringify(error.code);
                     break;
                 case 3:
-                    errorMessage = 'Timeout';
+                    errorMessage = 'Timeout: ' + JSON.stringify(error.code);
                     break;
             }
             console.log(errorMessage);
@@ -50,11 +49,12 @@ var LocationService = (function () {
             navigator.geolocation.getCurrentPosition(this.successCallback, this.errorCallback, this.options);
         }
         else {
+            console.log("browser location:" + localCity);
         }
     };
     LocationService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [core_2.Logger])
+        __metadata('design:paramtypes', [])
     ], LocationService);
     return LocationService;
 }());

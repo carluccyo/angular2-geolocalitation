@@ -1,13 +1,12 @@
 import { Injectable, Optional } from "@angular/core";
 import { Location } from './location.model';
-import { Logger } from 'angular2-logger/core';
 
 @Injectable()
 export class LocationService {
 
 
     public location: Location;
-    constructor(private logger: Logger) { }
+    constructor() { }
 
 
     getLocation() {
@@ -18,7 +17,7 @@ export class LocationService {
             navigator.geolocation.getCurrentPosition(this.successCallback, this.errorCallback, this.options);
         }
         else {
-            // do something when you already have the location
+            console.log("browser location:" + localCity);
         }
     }
 
@@ -31,7 +30,10 @@ export class LocationService {
         userLocation.latitude = latitude;
         userLocation.longitude = longitude;
 
-        this.logger.info('geolocalitation: ', location);
+        console.log(userLocation.latitude);
+        console.log(userLocation.longitude);
+
+        localStorage.setItem('city', JSON.stringify(userLocation));
 
     }
 
@@ -39,13 +41,13 @@ export class LocationService {
         let errorMessage = 'Unknown error';
         switch (error.code) {
             case 1:
-                errorMessage = 'Permission denied';
+                errorMessage = 'Permission denied: ' + JSON.stringify(error.code);
                 break;
             case 2:
-                errorMessage = 'Position unavailable';
+                errorMessage = 'Position unavailable: ' + JSON.stringify(error.code);
                 break;
             case 3:
-                errorMessage = 'Timeout';
+                errorMessage = 'Timeout: ' + JSON.stringify(error.code);
                 break;
         }
         console.log(errorMessage);
