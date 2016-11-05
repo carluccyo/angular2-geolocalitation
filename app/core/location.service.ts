@@ -1,6 +1,5 @@
-import {Injectable} from 'angular2/core';
+import {Injectable, Optional} from "@angular/core";
 import { Location } from './location.model';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 
 
 @Injectable()
@@ -8,8 +7,7 @@ export class LocationService {
 
 
     public location: Location ;
-    constructor( public http: Http) {}
-
+    constructor() {}
 
 
     getLocation() {
@@ -24,16 +22,16 @@ export class LocationService {
         }
     }
 
-    successCallback = (position)=> {
+    successCallback = (position : any)=> {
             let latitude = position.coords.latitude;
             let longitude = position.coords.longitude;
 
-            location['latitude'] = latitude;
-            location['longitude'] = longitude;
+            // location.latitude = latitude;
+            // location.longitude = longitude;
 
     }
 
-    errorCallback = (error) => {
+    errorCallback = (error : any) => {
             let errorMessage = 'Unknown error';
             switch(error.code) {
               case 1:

@@ -2,8 +2,26 @@
   "name": "angular2-geolocalitation",
   "version": "1.0.0",
   "description": "",
+  "main": "bundles/angular2-geolocalitation.min.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "tsc": "tsc",
+    "typings": "typings",
+    "uglifyjs": "uglifyjs",
+    "tslint": "tslint *.ts src/**/*.ts",
+    "lint": "npm run tslint",
+    "minify": "uglifyjs -o bundles/angular2-geolocalitation.min.js bundles/angular2-geolocalitation.js",
+    "prepublish": "npm run build",
+    "clean": "rimraf *.js *.js.map *.d.ts app/**/*.js app/**/*.js.map app/**/*.d.ts dist bundles",
+    "precompile": "typings install",
+    "compile": "npm run compile:bundle && npm run compile:cjs && npm run compile:es6",
+    "compile:bundle": "tsc",
+    "compile:cjs": "tsc -t ES5 --sourceMap --experimentalDecorators --emitDecoratorMetadata --moduleResolution node --declaration core.ts typings/index",
+    "compile:es6": "tsc -t ES6 --sourceMap --experimentalDecorators --emitDecoratorMetadata --moduleResolution node core.ts --outDir dist/es6",
+    "pretest": "npm run lint",
+    "test": "echo tests pending...",
+    "prebuild": "npm run clean && npm run compile && npm run test",
+    "build": "npm run minify",
+    "postbuild": "echo Build Successful."
   },
   "repository": {
     "type": "git",
@@ -19,5 +37,20 @@
   "bugs": {
     "url": "https://github.com/carluccyo/angular2-geolocalitation/issues"
   },
-  "homepage": "https://github.com/carluccyo/angular2-geolocalitation#readme"
+  "homepage": "https://github.com/carluccyo/angular2-geolocalitation#readme",
+  "dependencies": {
+    "@angular/common": "~2.0.1",
+    "@angular/compiler": "~2.0.1",
+    "@angular/core": "~2.0.1",
+    "zone.js": "^0.6.25",
+    "tslint": "^3.8.1",
+    "uglify-js": "^2.6.2",
+    "rxjs": "5.0.0-beta.12"
+  },
+  "devDependencies": {
+    "concurrently": "^3.0.0",
+    "lite-server": "^2.2.2",
+    "typescript": "^2.0.3",
+    "typings": "^1.4.0"
+  }
 }
