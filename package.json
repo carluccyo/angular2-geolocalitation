@@ -9,7 +9,12 @@
     "type": "git",
     "url": "git+https://github.com/carluccyo/angular2-geolocalitation.git"
   },
-  "author": "",
+  "author": "Carlo Di Maio",
+  "keywords": [
+    "angular2",
+    "service",
+    "geolocalitation"
+  ],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/carluccyo/angular2-geolocalitation/issues"
