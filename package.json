@@ -1,6 +1,6 @@
 {
   "name": "angular2-geolocalitation",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "",
   "main": "bundles/angular2-geolocalitation.min.js",
   "scripts": {
