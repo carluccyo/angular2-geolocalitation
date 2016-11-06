@@ -2,7 +2,8 @@ import { Location } from './location.model';
 export declare class LocationService {
     location: Location;
     constructor();
-    getLocation(): void;
+    initLocation(): void;
+    getLocation(): Location;
     successCallback: (position: any) => void;
     errorCallback: (error: any) => void;
     options: {

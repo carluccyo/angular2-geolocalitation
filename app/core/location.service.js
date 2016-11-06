@@ -12,17 +12,19 @@ var core_1 = require("@angular/core");
 var location_model_1 = require('./location.model');
 var LocationService = (function () {
     function LocationService() {
+        var _this = this;
         this.successCallback = function (position) {
+            console.log('successCallback');
             var latitude = position.coords.latitude;
             var longitude = position.coords.longitude;
-            var userLocation = new location_model_1.Location();
-            userLocation.latitude = latitude;
-            userLocation.longitude = longitude;
-            console.log(userLocation.latitude);
-            console.log(userLocation.longitude);
-            localStorage.setItem('city', JSON.stringify(userLocation));
+            _this.location.latitude = latitude;
+            _this.location.longitude = longitude;
+            console.log('this.location.latitude: ' + _this.location.latitude);
+            console.log('this.location.longitude: ' + _this.location.longitude);
         };
         this.errorCallback = function (error) {
+            console.log('errorCallback');
+            console.log('errorCallback error.code: ' + error.code);
             var errorMessage = 'Unknown error';
             switch (error.code) {
                 case 1:
@@ -39,18 +41,19 @@ var LocationService = (function () {
         };
         this.options = {
             enableHighAccuracy: true,
-            timeout: 1000,
+            timeout: 10000,
             maximumAge: 0
         };
+        this.location = new location_model_1.Location();
+        this.initLocation();
     }
-    LocationService.prototype.getLocation = function () {
-        var localCity = localStorage.getItem('city');
-        if ([null, undefined, ""].indexOf(localCity, 0) != -1) {
+    LocationService.prototype.initLocation = function () {
+        if (navigator && navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(this.successCallback, this.errorCallback, this.options);
         }
-        else {
-            console.log("browser location:" + localCity);
-        }
+    };
+    LocationService.prototype.getLocation = function () {
+        return this.location;
     };
     LocationService = __decorate([
         core_1.Injectable(), 
