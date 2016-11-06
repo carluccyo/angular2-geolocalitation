@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {LocationService} from "angular2-geolocalitation/core";
+import {LocationService, Location} from "angular2-geolocalitation/core";
 
 @Component({
     selector: "geolocalitation-app",
@@ -8,23 +8,22 @@ import {LocationService} from "angular2-geolocalitation/core";
         <div class="row">
           <div class="col-md-12">
             <h1>Logger's current priority level: </h1>
-
-
-              <button (click)="getLocation()"> getLocation() </button>
-
+            <pre>{{location? location.latitude : ''}}</pre>
+            <pre>{{location? location.longitude : ''}}</pre>
+            <button (click)="getLocation()"> getLocation() </button>
           </div>
         </div>
       </div>
-
     `
 })
 export class GeolocalitationAppComponent{
 
+    location : Location;
+
     constructor(public locationService : LocationService){}
 
-
     getLocation(){
-      this.locationService.getLocation();
+      this.location = this.locationService.getLocation();
     }
 
 }

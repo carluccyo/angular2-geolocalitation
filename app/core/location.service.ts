@@ -1,43 +1,53 @@
 import { Injectable, Optional } from "@angular/core";
 import { Location } from './location.model';
 
+import { Observable } from 'rxjs/Observable';
+
+
 @Injectable()
 export class LocationService {
 
+    location: Location;
 
-    public location: Location;
-    constructor() { }
+    constructor() {
+        this.location = new Location();
+        this.initLocation();
+    }
 
-
-    getLocation() {
-
-        let localCity = localStorage.getItem('city');
-
-        if ([null, undefined, ""].indexOf(localCity, 0) != -1) {
-            navigator.geolocation.getCurrentPosition(this.successCallback, this.errorCallback, this.options);
-        }
-        else {
-            console.log("browser location:" + localCity);
+    initLocation() {
+        if (navigator && navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                this.successCallback,
+                this.errorCallback,
+                this.options
+            );
         }
     }
 
+    getLocation(): Location {
+        return this.location;
+    }
+
     successCallback = (position: any) => {
+
+        console.log('successCallback');
+
         let latitude = position.coords.latitude;
         let longitude = position.coords.longitude;
 
-        let userLocation = new Location();
+        this.location.latitude = latitude;
+        this.location.longitude = longitude;
 
-        userLocation.latitude = latitude;
-        userLocation.longitude = longitude;
-
-        console.log(userLocation.latitude);
-        console.log(userLocation.longitude);
-
-        localStorage.setItem('city', JSON.stringify(userLocation));
+        console.log('this.location.latitude: ' + this.location.latitude);
+        console.log('this.location.longitude: ' + this.location.longitude);
 
     }
 
     errorCallback = (error: any) => {
+
+        console.log('errorCallback');
+        console.log('errorCallback error.code: ' + error.code);
+
         let errorMessage = 'Unknown error';
         switch (error.code) {
             case 1:
@@ -55,7 +65,7 @@ export class LocationService {
 
     options = {
         enableHighAccuracy: true,
-        timeout: 1000,
+        timeout: 10000,
         maximumAge: 0
     };
 
